@@ -7,24 +7,18 @@ import React, { useEffect, useState } from 'react';
 function App() {
 
   const navigate = useNavigate();
-  const [products, setProduct] = useState([]);
-  // const [isLaoding,setloading] = useState(false);
-
-  /// handleAPI 
-  useEffect(() => {
-    // setLoading(true);
-    fetch("https://api.restful-api.dev/objects")
-      .then((res) => res.json())
-      .then((data) => {
-        setProduct(data.products);
-        // setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        // setLoading(false);
-      });
-  }, []);
-
+  const [products,setProduct] = useState(
+    [
+        // Fatch product
+        useEffect(()=>{
+            fetch(`${BASt_URL}contents/all_content/`)
+            .then((res)=>res.json())
+            .then((items)=>{
+                setProduct(items.data);
+            })
+        },[])
+    ]);
+    
   //  HandleProductDetails
   const handleProductDetails =(product) =>{
      navigate("/products-details",{state:product});
@@ -40,13 +34,11 @@ function App() {
             return(
               <ProductCard
               key={index}
-              name={product.name}
-              id={product.id}
-              // title={product.title}
-              // image={product.thumbnail}
-              // body={product.body}
-              // slug={product.slug}
-              // handleProductDetails={()=> handleProductDetails(product)}
+              title={product.title}
+              image={product.thumbnail}
+              body={product.body}
+              description={product.slug}
+              handleProductDetails={()=> handleProductDetails(product)}
               />
             )
           })
